@@ -4,16 +4,11 @@ class UsersController < ApplicationController
     @user = User.new
   end
 
-  def create
-    @user = User.new(user_params)
-    if @user.save
-      flash[:notice] = "Welcome #{@user.username}, you have successfully signed Up"
-      redirect_to articles_path  
-    else
-      render 'new'
-    end
-
+  def show
+    @user = User.find(params[:id])
+    @articles = @user.articles
   end
+
 
   def edit
     @user = User.find(params[:id])
@@ -29,7 +24,19 @@ class UsersController < ApplicationController
     end
 
   end
-  
+
+  def create
+    @user = User.new(user_params)
+    if @user.save
+      flash[:notice] = "Welcome #{@user.username}, you have successfully signed Up"
+      redirect_to articles_path  
+    else
+      render 'new'
+    end
+
+  end
+
+
   private
 
   def user_params
